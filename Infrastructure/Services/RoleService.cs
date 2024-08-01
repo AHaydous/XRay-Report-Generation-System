@@ -53,8 +53,6 @@ namespace Infrastructure.Services
             }
         }
 
-
-
         public async Task<BaseResponseDTO<RoleDTO>> AddRole(RoleDTO roleDTO)
         {
             try
@@ -167,5 +165,34 @@ namespace Infrastructure.Services
             }
         }
 
+        public async Task<BaseResponseDTO<RoleDTO>> GetRoleById(long id)
+        {
+            BaseResponseDTO<RoleDTO> response = new();
+            try
+            {
+                var role = await _roleRepository.GetById(id);
+
+                if (role == null)
+                {
+                    response.StatusCode = Convert.ToInt32(StatusCode.BadRequest);
+                }
+                var roleDto = new RoleDTO
+                {
+                    Id = role.Id,
+                    Name = role.Name
+                };
+                response.StatusCode = Convert.ToInt32(StatusCode.Success);
+
+                response.Data = roleDto;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message.ToString();
+                response.StatusCode = Convert.ToInt32(StatusCode.BadRequest);
+
+                _logger.LogError(ex.Message.ToString());
+            }
+            return response;
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace Infrastructure.Services.IServices
         Task<BaseResponseDTO<RoleDTO>> AddRole(RoleDTO roleDTO);
         Task<BaseResponseDTO<RoleDTO>> UpdateRole(RoleDTO roleDTO);
         Task<BaseResponseDTO<object>> DeleteRole(long id);
+        Task<BaseResponseDTO<RoleDTO>> GetRoleById(long id);
+
     }
 }

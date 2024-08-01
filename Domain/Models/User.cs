@@ -29,5 +29,7 @@ namespace Domain.Models
         public DateTime? ModifiedDate { get; set; }
         public bool? ForceChangePassword { get; set; }
 
+        public ICollection<Appointment> PatientAppointments { get; set; }
+        public ICollection<Appointment> DoctorAppointments { get; set; }
     }
 }

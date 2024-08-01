@@ -16,28 +16,34 @@ namespace XRayReportApi.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllRoles")]
         public async Task<BaseResponseDTO<IEnumerable<RoleDTO>>> GetRoles()
         {
             return await _roleService.GetRoles();
         }
 
-
-        [HttpPost]
+        [HttpPost("AddRole")]
         public async Task<BaseResponseDTO<RoleDTO>> AddRole([FromBody] RoleDTO roleDTO)
         {
             return await _roleService.AddRole(roleDTO);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateRole")]
         public async Task<BaseResponseDTO<RoleDTO>> UpdateRole([FromBody] RoleDTO roleDTO)
         {
             return await _roleService.UpdateRole(roleDTO);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<BaseResponseDTO<object>> DeleteRole(long id)
         {
             return await _roleService.DeleteRole(id);
+        }
+
+        [HttpGet("GetRoleById/{id}")]
+        public async Task<BaseResponseDTO<RoleDTO>> GetRolebyId(long id)
+        {
+            return await _roleService.GetRoleById(id);
         }
     }
 }

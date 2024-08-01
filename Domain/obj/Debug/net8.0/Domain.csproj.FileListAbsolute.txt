@@ -5,8 +5,8 @@ C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.Gene
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.sourcelink.json
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.dll
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\refint\Domain.dll
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.pdb
 C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\ref\Domain.dll
-C:\Users\User\OneDrive\Desktop\XRayReportApi\Domain\obj\Debug\net8.0\Domain.sourcelink.json

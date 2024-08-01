@@ -22,6 +22,35 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Models.Appointment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DoctorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PatientId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("Domain.Models.Permission", b =>
                 {
                     b.Property<long>("Id")
@@ -37,6 +66,53 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permission");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "ManageUsers"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "ManageRoles"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "ViewAppointments"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "ViewPatientHistory"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "BookAppointments"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "DownloadReports"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "Signup"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Login"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "UploadImage"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Role", b =>
@@ -54,6 +130,23 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Doctor"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Patient"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.RolesPermissions", b =>
@@ -77,6 +170,74 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RolesPermissions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            PermissionId = 1L,
+                            RoleId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            PermissionId = 2L,
+                            RoleId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            PermissionId = 8L,
+                            RoleId = 1L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            PermissionId = 3L,
+                            RoleId = 2L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            PermissionId = 4L,
+                            RoleId = 2L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            PermissionId = 8L,
+                            RoleId = 2L
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            PermissionId = 5L,
+                            RoleId = 3L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            PermissionId = 6L,
+                            RoleId = 3L
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            PermissionId = 7L,
+                            RoleId = 3L
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            PermissionId = 8L,
+                            RoleId = 3L
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            PermissionId = 9L,
+                            RoleId = 3L
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -147,6 +308,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Domain.Models.Appointment", b =>
+                {
+                    b.HasOne("Domain.Models.User", "Doctor")
+                        .WithMany("DoctorAppointments")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.User", "Patient")
+                        .WithMany("PatientAppointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("Domain.Models.RolesPermissions", b =>
                 {
                     b.HasOne("Domain.Models.Permission", "Permission")
@@ -175,6 +355,13 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Models.User", b =>
+                {
+                    b.Navigation("DoctorAppointments");
+
+                    b.Navigation("PatientAppointments");
                 });
 #pragma warning restore 612, 618
         }
