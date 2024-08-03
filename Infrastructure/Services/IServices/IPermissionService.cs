@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,11 @@ namespace Infrastructure.Services.IServices
 {
     public interface IPermissionService
     {
-        Task<IEnumerable<Permission>> GetPermissionsByRole(int roleId);
-        Task<IEnumerable<Permission>> GetAllPermissions();
-
+        Task<BaseResponseDTO<IEnumerable<PermissionDTO>>> GetPermissionsByRole(long roleId);
+        Task<BaseResponseDTO<IEnumerable<PermissionDTO>>> GetPermissions();
+        Task<BaseResponseDTO<PermissionDTO>> AddPermission(PermissionDTO permissionDTO);
+        Task<BaseResponseDTO<PermissionDTO>> UpdatePermission(PermissionDTO permissionDTO);
+        Task<BaseResponseDTO<object>> DeletePermission(long id);
+        Task<BaseResponseDTO<PermissionDTO>> GetPermissionById(long id);
     }
 }

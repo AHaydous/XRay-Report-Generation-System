@@ -1,35 +1,38 @@
 ﻿using Domain.Models;
 using Infrastructure.Data;
+using Infrastructure.Repository.Base;
 using Infrastructure.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
-namespace Infrastructure.Repository
+public class PermissionRepository : Repository<Permission>, IPermissionRepository
 {
-    public class PermissionRepository : IPermissionRepository
+    private readonly DBContext _dbContext;
+    private readonly ILogger<PermissionRepository> _logger;
+
+    public PermissionRepository(DBContext context, ILogger<PermissionRepository> logger) : base(context)
     {
-        private readonly DBContext _dbContext;
+        _dbContext = context;
+        _logger = logger;
+    }
 
-        public PermissionRepository(DBContext dbContext)
+    public async Task<IEnumerable<Permission>> GetPermissionsByRole(long roleId)
+    {
+        try
         {
-            _dbContext = dbContext;
-        }
+            _logger.LogInformation("Fetching permissions for Role ID: {RoleId}", roleId);
 
-        public async Task<IEnumerable<Permission>> GetPermissionsByRole(long roleId)
-        {
-            return await _dbContext.RolesPermissions
+            var permissions = await _dbContext.RolesPermissions
                 .Where(rp => rp.RoleId == roleId)
                 .Select(rp => rp.Permission)
                 .ToListAsync();
-        }
 
-        public async Task<IEnumerable<Permission>> GetAllPermissions()
+            return permissions;
+        }
+        catch (Exception ex)
         {
-            return await _dbContext.Permission.ToListAsync();
+            _logger.LogError(ex, "Error while retrieving permissions for Role ID: {RoleId}", roleId);
+            throw new Exception($"Failed to retrieve permissions for role ID {roleId}: " + ex.Message);
         }
     }
 }
