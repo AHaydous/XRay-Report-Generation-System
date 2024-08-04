@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20240804231831_AddHolidaysTable")]
+    partial class AddHolidaysTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,38 +73,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Holidays");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Date = new DateTime(2024, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Christmas Day"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Date = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "New Year's Day"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Date = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Labour Day"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Date = new DateTime(2024, 11, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Thanksgiving Day"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Date = new DateTime(2024, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Independence Day"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Permission", b =>

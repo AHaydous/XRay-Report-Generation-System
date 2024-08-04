@@ -14,18 +14,21 @@ namespace Infrastructure.UnitOfWork
         public IPermissionRepository Permissions { get; }
         public IRoleRepository Roles { get; }
         public IAppointmentRepository Appointments { get; }
+        public IHolidayRepository Holidays { get; }
 
         public UnitOfWork(DBContext dbContext,
             IUserRepository usersRepository,
             IPermissionRepository permissionRepository,
             IRoleRepository roleRepository,
-            IAppointmentRepository appointmentRepository)
+            IAppointmentRepository appointmentRepository,
+            IHolidayRepository holidayRepository)
         {
             _context = dbContext;
             Users = usersRepository;
             Permissions = permissionRepository;
             Roles = roleRepository;
             Appointments = appointmentRepository;
+            Holidays = holidayRepository;
         }
 
         public int Save()

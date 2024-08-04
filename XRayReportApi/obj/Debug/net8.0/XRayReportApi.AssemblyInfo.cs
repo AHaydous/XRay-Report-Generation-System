@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("XRayReportApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44b776458cffb2f2af943db7ebeeb1649cb81cb8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2bc9f9e53b5cea1c979d7553935a182b026122f")]
 [assembly: System.Reflection.AssemblyProductAttribute("XRayReportApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("XRayReportApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

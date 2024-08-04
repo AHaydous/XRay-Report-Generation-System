@@ -67,7 +67,30 @@ namespace Infrastructure.Services
             {
                 appointmentDto.Id = 0;
 
+                var isHoliday = await _unitOfWork.Holidays.IsHoliday(appointmentDto.AppointmentDate);
+
+                if (isHoliday)
+                {
+                    return new BaseResponseDTO<AppointmentDto>
+                    {
+                        StatusCode = (int)StatusCode.BadRequest,
+                        Message = "Cannot book an appointment on a holiday",
+                        Data = null
+                    };
+                }
+
                 var appointment = _mapper.Map<Appointment>(appointmentDto);
+
+
+                if (await _appointmentRepository.HasConflict(appointment.DoctorId, appointment.PatientId, appointment.AppointmentDate))
+                {
+                    return new BaseResponseDTO<AppointmentDto>
+                    {
+                        StatusCode = (int)StatusCode.BadRequest,
+                        Message = "An appointment already exists within 30 minutes of the specified time.",
+                        Data = null
+                    };
+                }
 
                 await _appointmentRepository.Add(appointment);
                 _unitOfWork.Save();
@@ -94,10 +117,33 @@ namespace Infrastructure.Services
         {
             try
             {
+                var isHoliday = await _unitOfWork.Holidays.IsHoliday(appointmentDto.AppointmentDate);
+
+                if (isHoliday)
+                {
+                    return new BaseResponseDTO<AppointmentDto>
+                    {
+                        StatusCode = (int)StatusCode.BadRequest,
+                        Message = "Cannot update the appointment to a holiday",
+                        Data = null
+                    };
+                }
+
                 var existingAppointment = await _appointmentRepository.GetById(appointmentDto.Id);
 
                 if (existingAppointment != null)
                 {
+
+                    if (await _appointmentRepository.HasConflict(appointmentDto.DoctorId, appointmentDto.PatientId, appointmentDto.AppointmentDate))
+                    {
+                        return new BaseResponseDTO<AppointmentDto>
+                        {
+                            StatusCode = (int)StatusCode.BadRequest,
+                            Message = "An appointment already exists within 30 minutes of the specified time.",
+                            Data = null
+                        };
+                    }
+
                     _mapper.Map(appointmentDto, existingAppointment);
 
                     _appointmentRepository.Update(existingAppointment);
@@ -195,5 +241,56 @@ namespace Infrastructure.Services
             }
             return response;
         }
+
+        public async Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByPatientId(long patientId)
+        {
+            try
+            {
+                var appointments = await _appointmentRepository.GetAppointmentsByPatientId(patientId);
+                var appointmentDtos = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+
+                return new BaseResponseDTO<IEnumerable<AppointmentDto>>
+                {
+                    StatusCode = (int)StatusCode.Success,
+                    Data = appointmentDtos
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error in GetAppointmentsByPatientId for PatientId: {patientId}");
+                return new BaseResponseDTO<IEnumerable<AppointmentDto>>
+                {
+                    StatusCode = (int)StatusCode.BadRequest,
+                    Message = ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public async Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByDoctorId(long doctorId)
+        {
+            try
+            {
+                var appointments = await _appointmentRepository.GetAppointmentsByDoctorId(doctorId);
+                var appointmentDtos = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+
+                return new BaseResponseDTO<IEnumerable<AppointmentDto>>
+                {
+                    StatusCode = (int)StatusCode.Success,
+                    Data = appointmentDtos
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error in GetAppointmentsByDoctorId for DoctorId: {doctorId}");
+                return new BaseResponseDTO<IEnumerable<AppointmentDto>>
+                {
+                    StatusCode = (int)StatusCode.BadRequest,
+                    Message = ex.Message,
+                    Data = null
+                };
+            }
+        }
+
     }
 }

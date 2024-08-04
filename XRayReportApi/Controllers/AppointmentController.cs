@@ -47,5 +47,17 @@ namespace XRayReportApi.Controllers
         {
             return await _appointmentService.GetAppointmentById(id);
         }
+
+        [HttpGet("GetAppointmentsByPatientId/{patientId}")]
+        public async Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByPatientId(long patientId)
+        {
+            return await _appointmentService.GetAppointmentsByPatientId(patientId);
+        }
+
+        [HttpGet("GetAppointmentsByDoctorId/{doctorId}")]
+        public async Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByDoctorId(long doctorId)
+        {
+            return await _appointmentService.GetAppointmentsByDoctorId(doctorId);
+        }
     }
 }

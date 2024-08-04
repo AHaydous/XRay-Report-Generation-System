@@ -15,5 +15,7 @@ namespace Infrastructure.Services.IServices
         Task<BaseResponseDTO<AppointmentDto>> UpdateAppointment(AppointmentDto appointmentDTO);
         Task<BaseResponseDTO<object>> DeleteAppointment(long id);
         Task<BaseResponseDTO<AppointmentDto>> GetAppointmentById(long id);
+        Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByPatientId(long patientId);
+        Task<BaseResponseDTO<IEnumerable<AppointmentDto>>> GetAppointmentsByDoctorId(long doctorId);
     }   
 }

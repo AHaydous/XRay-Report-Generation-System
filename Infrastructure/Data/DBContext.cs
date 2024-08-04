@@ -17,6 +17,8 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RolePermissionConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(HolidayConfiguration).Assembly);
+
 
             modelBuilder.Entity<Role>().HasData(
                 new Role { Id = 1, Name = "Admin" },
@@ -49,6 +51,14 @@ namespace Infrastructure.Data
                 new RolesPermissions { Id = 10, RoleId = 3, PermissionId = 8 },
                 new RolesPermissions { Id = 11, RoleId = 3, PermissionId = 9 }
              );
+
+            modelBuilder.Entity<Holiday>().HasData(
+                new Holiday { Id = 1, Date = new DateTime(2024, 12, 25), Description = "Christmas Day" },
+                new Holiday { Id = 2, Date = new DateTime(2024, 1, 1), Description = "New Year's Day" },
+                new Holiday { Id = 3, Date = new DateTime(2024, 5, 1), Description = "Labour Day" },
+                new Holiday { Id = 4, Date = new DateTime(2024, 11, 28), Description = "Thanksgiving Day" },
+                new Holiday { Id = 5, Date = new DateTime(2024, 11, 22), Description = "Independence Day" }
+            );
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -61,7 +71,7 @@ namespace Infrastructure.Data
         public DbSet<Permission> Permission { get; set; }
         public DbSet<RolesPermissions> RolesPermissions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-
+        public DbSet<Holiday> Holidays { get; set; }
 
     }
 }

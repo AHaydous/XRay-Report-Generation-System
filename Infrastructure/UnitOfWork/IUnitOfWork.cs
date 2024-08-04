@@ -9,6 +9,8 @@ namespace Infrastructure.UnitOfWork
         IRoleRepository Roles { get; }
         IPermissionRepository Permissions { get; }
         IAppointmentRepository Appointments { get; }
+        IHolidayRepository Holidays { get; }
+
         int Save();
     }
 }
