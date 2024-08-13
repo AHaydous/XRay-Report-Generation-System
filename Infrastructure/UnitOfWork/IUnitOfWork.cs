@@ -10,6 +10,8 @@ namespace Infrastructure.UnitOfWork
         IPermissionRepository Permissions { get; }
         IAppointmentRepository Appointments { get; }
         IHolidayRepository Holidays { get; }
+        IReportRepository Reports { get; }
+        IXRayImageRepository XRayImages { get; }
 
         int Save();
     }

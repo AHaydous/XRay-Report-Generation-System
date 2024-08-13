@@ -165,7 +165,42 @@ namespace Infrastructure.Migrations
                         {
                             Id = 9L,
                             Name = "UploadImage"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "ManageReports"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Name = "ManageXRayImages"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Models.Report", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("GeneratedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReportText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("XRayImageId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("XRayImageId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Domain.Models.Role", b =>
@@ -290,6 +325,18 @@ namespace Infrastructure.Migrations
                             Id = 11L,
                             PermissionId = 9L,
                             RoleId = 3L
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            PermissionId = 10L,
+                            RoleId = 2L
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            PermissionId = 11L,
+                            RoleId = 2L
                         });
                 });
 
@@ -361,6 +408,35 @@ namespace Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Domain.Models.XRayImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UploadedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("XRayImages");
+                });
+
             modelBuilder.Entity("Domain.Models.Appointment", b =>
                 {
                     b.HasOne("Domain.Models.User", "Doctor")
@@ -378,6 +454,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Domain.Models.Report", b =>
+                {
+                    b.HasOne("Domain.Models.XRayImage", "XRayImage")
+                        .WithMany()
+                        .HasForeignKey("XRayImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("XRayImage");
                 });
 
             modelBuilder.Entity("Domain.Models.RolesPermissions", b =>
@@ -408,6 +495,17 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Models.XRayImage", b =>
+                {
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>

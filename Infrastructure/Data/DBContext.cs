@@ -35,7 +35,10 @@ namespace Infrastructure.Data
                 new Permission { Id = 6, Name = "DownloadReports" },
                 new Permission { Id = 7, Name = "Signup" },
                 new Permission { Id = 8, Name = "Login" },
-                new Permission { Id = 9, Name = "UploadImage" }
+                new Permission { Id = 9, Name = "UploadImage" },
+                new Permission { Id = 10, Name = "ManageReports"},
+                new Permission { Id = 11, Name = "ManageXRayImages"}
+
             );
 
             modelBuilder.Entity<RolesPermissions>().HasData(
@@ -49,7 +52,9 @@ namespace Infrastructure.Data
                 new RolesPermissions { Id = 8, RoleId = 3, PermissionId = 6 },
                 new RolesPermissions { Id = 9, RoleId = 3, PermissionId = 7 },
                 new RolesPermissions { Id = 10, RoleId = 3, PermissionId = 8 },
-                new RolesPermissions { Id = 11, RoleId = 3, PermissionId = 9 }
+                new RolesPermissions { Id = 11, RoleId = 3, PermissionId = 9 },
+                new RolesPermissions { Id = 12, RoleId = 2, PermissionId = 10 },
+                new RolesPermissions { Id = 13, RoleId = 2, PermissionId = 11 }
              );
 
             modelBuilder.Entity<Holiday>().HasData(
@@ -72,6 +77,8 @@ namespace Infrastructure.Data
         public DbSet<RolesPermissions> RolesPermissions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<XRayImage> XRayImages { get; set; }
 
     }
 }

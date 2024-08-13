@@ -50,9 +50,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<ReportService, ReportService>();
 builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
 builder.Services.AddScoped<IHolidayService, HolidayService>();
+builder.Services.AddScoped<IXRayImageRepository, XRayImageRepository>();
+builder.Services.AddScoped<IXRayImageService, XRayImageService>();
 
 
 builder.Services.AddControllers();
