@@ -225,33 +225,5 @@ namespace Infrastructure.Services
             return response;
         }
 
-        public async Task<BaseResponseDTO<byte[]>> DownloadReport(long id)
-        {
-            var response = new BaseResponseDTO<byte[]>();
-            try
-            {
-                var report = await _reportRepository.GetById(id);
-                if (report == null)
-                {
-                    response.StatusCode = (int)StatusCode.BadRequest;
-                    response.Message = "Report not found";
-                    return response;
-                }
-
-                // Convert report content to byte array
-                var fileContent = Encoding.UTF8.GetBytes(report.ReportText);
-
-                response.Data = fileContent;
-                response.StatusCode = (int)StatusCode.Success;
-            }
-            catch (Exception ex)
-            {
-                response.StatusCode = (int)StatusCode.BadRequest;
-                response.Message = ex.Message;
-            }
-            return response;
-        }
-
-
     }
 }

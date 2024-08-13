@@ -36,10 +36,12 @@ namespace XRayReportApi.Controllers
         }
 
         [HttpPost("UploadXRayImage")]
-        public async Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage([FromForm] IFormFile file)
+        public async Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage(IFormFile file, long userId)
         {
-            return await _xRayImageService.UploadXRayImage(file);
+            var response = await _xRayImageService.UploadXRayImage(file, userId);
+            return response;
         }
+
 
 
         private async Task<string> RunModelInference(string filePath)

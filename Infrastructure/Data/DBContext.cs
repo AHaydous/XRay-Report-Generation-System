@@ -32,29 +32,27 @@ namespace Infrastructure.Data
                 new Permission { Id = 3, Name = "ViewAppointments" },
                 new Permission { Id = 4, Name = "ViewPatientHistory" },
                 new Permission { Id = 5, Name = "BookAppointments" },
-                new Permission { Id = 6, Name = "DownloadReports" },
-                new Permission { Id = 7, Name = "Signup" },
-                new Permission { Id = 8, Name = "Login" },
-                new Permission { Id = 9, Name = "UploadImage" },
-                new Permission { Id = 10, Name = "ManageReports"},
-                new Permission { Id = 11, Name = "ManageXRayImages"}
+                new Permission { Id = 6, Name = "Signup" },
+                new Permission { Id = 7, Name = "Login" },
+                new Permission { Id = 8, Name = "UploadImage" },
+                new Permission { Id = 9, Name = "ManageReports"},
+                new Permission { Id = 10, Name = "ManageXRayImages"}
 
             );
 
             modelBuilder.Entity<RolesPermissions>().HasData(
                 new RolesPermissions { Id = 1, RoleId = 1, PermissionId = 1 },
                 new RolesPermissions { Id = 2, RoleId = 1, PermissionId = 2 },
-                new RolesPermissions { Id = 3, RoleId = 1, PermissionId = 8 },
+                new RolesPermissions { Id = 3, RoleId = 1, PermissionId = 7 },
                 new RolesPermissions { Id = 4, RoleId = 2, PermissionId = 3 },
                 new RolesPermissions { Id = 5, RoleId = 2, PermissionId = 4 },
-                new RolesPermissions { Id = 6, RoleId = 2, PermissionId = 8 },
+                new RolesPermissions { Id = 6, RoleId = 2, PermissionId = 7 },
                 new RolesPermissions { Id = 7, RoleId = 3, PermissionId = 5 },
                 new RolesPermissions { Id = 8, RoleId = 3, PermissionId = 6 },
                 new RolesPermissions { Id = 9, RoleId = 3, PermissionId = 7 },
                 new RolesPermissions { Id = 10, RoleId = 3, PermissionId = 8 },
-                new RolesPermissions { Id = 11, RoleId = 3, PermissionId = 9 },
-                new RolesPermissions { Id = 12, RoleId = 2, PermissionId = 10 },
-                new RolesPermissions { Id = 13, RoleId = 2, PermissionId = 11 }
+                new RolesPermissions { Id = 11, RoleId = 2, PermissionId = 9 },
+                new RolesPermissions { Id = 12, RoleId = 2, PermissionId = 10 }
              );
 
             modelBuilder.Entity<Holiday>().HasData(

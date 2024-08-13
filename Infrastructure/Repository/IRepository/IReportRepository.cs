@@ -11,7 +11,5 @@ namespace Infrastructure.Repository.IRepository
     public interface IReportRepository : IRepository<Report>
     {
         Task<Report> GetByXRayImageIdAsync(long xRayImageId);
-        Task<Report> GetById(long id);
-
     }
 }

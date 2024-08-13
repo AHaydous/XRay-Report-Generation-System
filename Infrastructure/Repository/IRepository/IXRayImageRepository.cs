@@ -10,6 +10,5 @@ namespace Infrastructure.Repository.IRepository
 {
     public interface IXRayImageRepository : IRepository<XRayImage>
     {
-        Task<XRayImage> UploadXRayImage(XRayImage xRayImage);
     }
 }

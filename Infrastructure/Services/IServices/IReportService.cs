@@ -16,6 +16,5 @@ namespace Infrastructure.Services.IServices
         Task<BaseResponseDTO<object>> DeleteReport(long id);
         Task<BaseResponseDTO<ReportDTO>> GetReportById(long id);
         Task<BaseResponseDTO<ReportDTO>> GetReportByXRayImageId(long xRayImageId);
-        Task<BaseResponseDTO<byte[]>> DownloadReport(long id);
     }
 }

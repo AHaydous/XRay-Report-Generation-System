@@ -26,9 +26,6 @@ namespace Infrastructure.Repository
                 .Include(r => r.XRayImage)
                 .FirstOrDefaultAsync(r => r.XRayImageId == xRayImageId);
         }
-        public async Task<Report> GetById(long id)
-        {
-            return await _context.Set<Report>().FindAsync(id);
-        }
+
     }
 }

@@ -130,50 +130,60 @@ namespace Infrastructure.Services
             return response;
         }
 
-        public async Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage(IFormFile file)
+        public async Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage(IFormFile file, long userId)
         {
-            BaseResponseDTO<XRayImageDTO> response = new();
             try
             {
                 if (file == null || file.Length == 0)
                 {
-                    response.StatusCode = Convert.ToInt32(StatusCode.BadRequest);
-                    response.Message = "No file uploaded.";
-                    return response;
+                    return new BaseResponseDTO<XRayImageDTO>
+                    {
+                        StatusCode = (int)StatusCode.BadRequest,
+                        Message = "Invalid file."
+                    };
                 }
 
-                var filePath = Path.Combine(_uploadsFolder, file.FileName);
+                // Generate a unique file name
+                string fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+                string filePath = Path.Combine(_uploadsFolder, fileName);
 
-                // Save the file to the file system
+                // Save the file to the server
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                // Create the XRayImage entity
+                // Create a new XRayImage entity
                 var xRayImage = new XRayImage
                 {
-                    FileName = file.FileName,
+                    FileName = fileName,
                     ImagePath = filePath,
-                    UploadedDate = DateTime.Now // Setting the uploaded date
+                    UploadedDate = DateTime.UtcNow,
+                    UserId = userId
                 };
 
-                // Save to the database
-                var uploadedXRayImage = await _xRayImageRepository.UploadXRayImage(xRayImage);
-                var xRayImageDTO = _mapper.Map<XRayImageDTO>(uploadedXRayImage);
+                // Add the entity to the database
+                await _xRayImageRepository.Add(xRayImage);
+                _unitOfWork.Save(); 
 
-                response.Data = xRayImageDTO;
-                response.StatusCode = Convert.ToInt32(StatusCode.Success);
+                // Map the entity to DTO
+                var xRayImageDTO = _mapper.Map<XRayImageDTO>(xRayImage);
+
+                return new BaseResponseDTO<XRayImageDTO>
+                {
+                    StatusCode = (int)StatusCode.Success,
+                    Data = xRayImageDTO
+                };
             }
             catch (Exception ex)
             {
-                response.Message = ex.Message.ToString();
-                response.StatusCode = Convert.ToInt32(StatusCode.BadRequest);
-
-                _logger.LogError(ex.Message.ToString());
+                _logger.LogError(ex, "Error in UploadImage");
+                return new BaseResponseDTO<XRayImageDTO>
+                {
+                    StatusCode = (int)StatusCode.BadRequest,
+                    Message = ex.Message.ToString()
+                };
             }
-            return response;
         }
-
     }
 }

@@ -13,6 +13,6 @@ namespace Infrastructure.Services.IServices
         Task<BaseResponseDTO<IEnumerable<XRayImageDTO>>> GetXRayImages();
         Task<BaseResponseDTO<object>> DeleteXRayImage(long id);
         Task<BaseResponseDTO<XRayImageDTO>> GetXRayImageById(long id);
-        Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage(IFormFile file);
+        Task<BaseResponseDTO<XRayImageDTO>> UploadXRayImage(IFormFile file, long userId);
     }
 }

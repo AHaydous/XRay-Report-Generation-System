@@ -53,11 +53,5 @@ namespace XRayReportApi.Controllers
             return await _reportService.GetReportByXRayImageId(id);
         }
 
-        [HttpGet("Download/{id}")]
-        public async Task<BaseResponseDTO<byte[]>> DownloadReport(long id)
-        {
-            return await _reportService.DownloadReport(id);
-        }
-
     }
 }

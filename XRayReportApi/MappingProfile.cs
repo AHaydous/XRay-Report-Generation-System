@@ -11,6 +11,8 @@ public class MappingProfile : Profile
         CreateMap<Appointment, AppointmentDto>().ReverseMap();
         CreateMap<Permission, PermissionDTO>().ReverseMap();
         CreateMap<Holiday, HolidayDTO>().ReverseMap();
+        CreateMap<Report, ReportDTO>().ReverseMap();
+        CreateMap<XRayImage, XRayImageDTO>().ReverseMap();
 
     }
 }
